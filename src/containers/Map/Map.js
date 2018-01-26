@@ -3,6 +3,10 @@ import loadGoogleMapsAPI from 'load-google-maps-api';
 import Sidebar from '../../components/Sidebar/Sidebar';
 
 class Map extends Component {
+  state = {
+    sidebarInfo: null
+  };
+
   componentDidMount () {
     // Load the Google Map then initialize it
     loadGoogleMapsAPI().then((googleMaps) => {
@@ -22,7 +26,7 @@ class Map extends Component {
       });
 
     georssLayer.setMap(map);
-    georssLayer.addListener('click', function(e) {
+    georssLayer.addListener('click', (e) => {
       // Copy the feature data first
     	let newData = {...e.featureData};
 
@@ -31,13 +35,17 @@ class Map extends Component {
 
       // Set the infoWindow html
       e.featureData.infoWindowHtml = newData.infoWindowHtml;
+
+      this.setState({
+        sidebarInfo: newData.infoWindowHtml
+      });
     });
   }
 
   render() {
     return (
       <div className="App">
-        <Sidebar />
+        <Sidebar info={this.state.sidebarInfo}/>
         <div id="map"></div>
       </div>
     );
