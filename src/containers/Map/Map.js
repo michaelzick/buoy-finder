@@ -50,13 +50,21 @@ class Map extends Component {
 
   addDomControls = georssLayer => {
     georssLayer.addListener('click', (e) => {
-      let newData = {...e.featureData}, // Copy the feature data first
-          favBar = document.createElement('h1'),
-          favBarText = document.createTextNode('Add to favorites');
+      const newData = {...e.featureData}, // Copy the feature data first
+          infoWinDiv = document.createElement('div'),
+          favBarDiv = document.createElement('div'),
+          favBarPlusDiv = document.createElement('div'),
+          favBarTextDiv = document.createElement('div'),
+          favBarText = document.createTextNode('Add to favorites'),
+          favBarPlus = document.createTextNode('+');
 
-      favBar.appendChild(favBarText);
-      favBar.insertAdjacentHTML('beforeend', e.featureData.infoWindowHtml);
-      favBar.addEventListener('click', () => {
+      favBarTextDiv.appendChild(favBarText); // Add the text to the span element
+      favBarPlusDiv.appendChild(favBarPlus); // Add the + to the div element
+
+      favBarTextDiv.classList.add('fav-bar-text');
+      favBarPlusDiv.classList.add('fav-bar-plus');
+
+      favBarPlusDiv.addEventListener('click', () => {
           this.setState({
             sidebarInfo: newData
           });
@@ -64,8 +72,15 @@ class Map extends Component {
         this.addToFavs(newData);
       });
 
+      favBarDiv.appendChild(favBarTextDiv); // Add the text/+ to the parent div
+      favBarDiv.appendChild(favBarPlusDiv); // Add the text/+ to the parent div
+
+      infoWinDiv.appendChild(favBarDiv);
+
+      infoWinDiv.insertAdjacentHTML('beforeend', e.featureData.infoWindowHtml);
+
       // Add custom html to the infoWindow
-      newData.infoWindowHtml = favBar;
+      newData.infoWindowHtml = infoWinDiv;
 
       // Set the infoWindow html
       e.featureData.infoWindowHtml = newData.infoWindowHtml;
