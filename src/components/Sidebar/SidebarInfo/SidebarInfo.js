@@ -5,10 +5,8 @@ const sidebarInfo = (props) => {
         location;
 
     if (props.info) {
-        props.info.map(info => {
-            name = info.name;
-            location = info.snippet.split('Location: ')[1];
-        });
+      name = props.info.name;
+      location = props.info.snippet.split('Location: ')[1];
     }
 
     return (
