@@ -5,7 +5,7 @@ import classes from './Map.css';
 
 class Map extends Component {
   state = {
-    sidebarInfo: null,
+    favs: localStorage,
   };
 
   componentDidMount () {
@@ -47,7 +47,11 @@ class Map extends Component {
     // Set the item in storage (has to be string)
     localStorage.setItem(newData.id, JSON.stringify(favsJson));
 
-    console.log(localStorage);
+    this.setState({
+      favs: localStorage
+    });
+
+    console.log(this.state.favs);
   }
 
   // Adds custom html and click event to infoWindow
@@ -75,10 +79,6 @@ class Map extends Component {
 
       // Clicking '+' updates state and adds to favs
       favBarPlusDiv.addEventListener('click', () => {
-        this.setState({
-          sidebarInfo: newData // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Is this needed?
-        });
-
         this.addToFavs(newData);
       });
 
@@ -101,7 +101,7 @@ class Map extends Component {
   render() {
     return (
       <div className={classes.mapWrap}>
-        <Sidebar info={this.state.sidebarInfo} />
+        <Sidebar favs={this.state.favs} />
         <div className={classes.map} id="map"></div>
       </div>
     );
