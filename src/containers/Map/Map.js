@@ -9,7 +9,6 @@ class Map extends Component {
   };
 
   componentDidMount () {
-
     // Load the Google Map then initialize it
     loadGoogleMapsAPI().then((googleMaps) => {
 
@@ -50,8 +49,6 @@ class Map extends Component {
     this.setState({
       favs: localStorage
     });
-
-    console.log(this.state.favs);
   }
 
   clearAllFavs = () => {
@@ -60,6 +57,8 @@ class Map extends Component {
     this.setState({
       favs: localStorage
     });
+
+    console.log(!this.state.favs.length);
   }
 
   // Adds custom html and click event to infoWindow
