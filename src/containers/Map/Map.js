@@ -5,7 +5,8 @@ import classes from './Map.css';
 
 class Map extends Component {
   state = {
-    sidebarInfo: null
+    sidebarInfo: null,
+    sidebarClosed: true
   };
 
   componentDidMount () {
@@ -29,10 +30,22 @@ class Map extends Component {
     georssLayer.setMap(map);
     georssLayer.addListener('click', (e) => {
       // Copy the feature data first
-    	let newData = {...e.featureData};
+    	let newData = {...e.featureData},
+    	    favBar = document.createElement('h1'),
+    	    favBarText = document.createTextNode('Add to favorites');
+
+    	favBar.appendChild(favBarText);
+
+    	favBar.insertAdjacentHTML('beforeend', e.featureData.infoWindowHtml);
+
+    	favBar.addEventListener('click', () => {
+    	  this.setState({
+    	    sidebarClosed: false
+    	  });
+    	});
 
       // Add custom html to the infoWindow
-      newData.infoWindowHtml = '<h1>hello</h1>' + e.featureData.infoWindowHtml;
+      newData.infoWindowHtml = favBar;
 
       // Set the infoWindow html
       e.featureData.infoWindowHtml = newData.infoWindowHtml;
@@ -46,7 +59,10 @@ class Map extends Component {
   render() {
     return (
       <div className={classes.mapWrap}>
-        <Sidebar info={this.state.sidebarInfo}/>
+        <Sidebar
+          info={this.state.sidebarInfo}
+          closed={this.state.sidebarClosed}/>
+
         <div className={classes.map} id="map"></div>
       </div>
     );

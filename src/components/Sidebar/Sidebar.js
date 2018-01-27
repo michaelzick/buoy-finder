@@ -3,6 +3,7 @@ import classes from './Sidebar.css';
 import SidebarInfo from './SidebarInfo/SidebarInfo';
 
 const sidebar = (props) => {
+    console.log(props);
     return (
         <div className={classes.sidebar} id='sidebar'>
             <SidebarInfo info={props.info}/>
