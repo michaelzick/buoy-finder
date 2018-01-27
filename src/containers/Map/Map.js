@@ -70,8 +70,9 @@ class Map extends Component {
     georssLayer.addListener('click', (e) => {
       const newData = {...e.featureData}, // Copy the feature data first
             favBar = <div>
-                       <div>Add to favs</div>
-                       <button onClick={() => this.addToFavs(e.featureData)}>+</button>
+                       <div className={classes.favBarText}>Add to favorites</div>
+                       <div className={classes.favBarPlus} onClick={() => this.addToFavs(e.featureData)}>+</div>
+                       <div className={classes.clearDiv}></div>
                      </div>;
 
       // Use ReactDOM to create a real DOM element
