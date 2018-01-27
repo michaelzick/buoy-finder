@@ -6,7 +6,6 @@ import classes from './Map.css';
 class Map extends Component {
   state = {
     sidebarInfo: null,
-    sidebarClosed: true
   };
 
   componentDidMount () {
@@ -40,8 +39,8 @@ class Map extends Component {
 
     	favBar.addEventListener('click', () => {
     	  this.setState({
-    	    sidebarClosed: false
-    	  });
+          sidebarInfo: newData
+        });
     	});
 
       // Add custom html to the infoWindow
@@ -49,10 +48,6 @@ class Map extends Component {
 
       // Set the infoWindow html
       e.featureData.infoWindowHtml = newData.infoWindowHtml;
-
-      this.setState({
-        sidebarInfo: newData
-      });
     });
   }
 
