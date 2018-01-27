@@ -8,3 +8,15 @@
   font-weight: bold;
   margin-bottom: 10px;
 }
+
+.deleteFav {
+  float: right;
+  color: #FFF;
+  padding: 5px 15px;
+  background: #000;
+  cursor: pointer;
+}
+
+.sidebarDescription {
+  max-width: 385px;
+}

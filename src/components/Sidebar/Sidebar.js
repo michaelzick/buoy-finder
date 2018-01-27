@@ -21,12 +21,16 @@ const sidebar = (props) => {
           <SidebarItem
             key={fav}
             id={fav}
+            deleteFav={props.deleteFav}
             favData={props.favs[fav]} />
         );
       }
     }
   } else {
-    favElements = <div><h2>You don't have any favorites.</h2>Click a map marker and add one.</div>;
+    favElements = <div>
+                    <h2>You don't have any favorites.</h2>
+                    <h3>Click a map marker and add one.</h3>
+                  </div>;
   }
 
   return (

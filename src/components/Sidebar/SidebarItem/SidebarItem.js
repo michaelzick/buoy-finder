@@ -7,8 +7,13 @@ const sidebarItem = (props) => {
 
     return (
       <div className={classes.sidebarItem}>
-        <div className={classes.sidebarName}>{favData.name}</div>
-        <div dangerouslySetInnerHTML={{__html: favData.description}}></div>
+        <div>
+          <div className={classes.sidebarName}>{favData.name}</div>
+          <div className={classes.deleteFav} onClick={() => props.deleteFav(props.id)}>Remove</div>
+        </div>
+        <div
+          dangerouslySetInnerHTML={{__html: favData.description}}
+          className={classes.sidebarDescription}></div>
       </div>
     );
 };
