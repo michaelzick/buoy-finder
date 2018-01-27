@@ -37,7 +37,7 @@ class Map extends Component {
       e.featureData.infoWindowHtml = newData.infoWindowHtml;
 
       this.setState({
-        sidebarInfo: newData.infoWindowHtml
+        sidebarInfo: [newData]
       });
     });
   }
