@@ -5,7 +5,7 @@ const infoWindow = (props) => {
   return (
     <div>
       <div className={classes.favBarText}>Add to favorites</div>
-      <button className={classes.favBarPlus} onClick={props.addFav(props.data)}>+</button>
+      <button className={classes.favBarPlus} onClick={props.addFav(props.element.featureData)}>+</button>
       <div className={classes.clearDiv}></div>
       <div dangerouslySetInnerHTML={{__html: props.data.infoWindowHtml}}></div>
     </div>
