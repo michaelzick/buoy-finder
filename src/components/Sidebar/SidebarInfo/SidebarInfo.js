@@ -1,18 +1,15 @@
 import React from 'react';
 
 const sidebarInfo = (props) => {
-    let name,
-        location;
-
-    console.log(props.favData);
-
-    // name = props.fav.name;
-    // location = props.fav.snippet.split('Location: ')[1];
+    const favDataRaw = JSON.parse(props.favData),
+          favData = favDataRaw[props.id],
+          name = props.favData.name,
+          description = favData.description;
 
     return (
       <div>
-        <div></div>
-        <div></div>
+        <div>{name}</div>
+        <div>{description}</div>
       </div>
     );
 };

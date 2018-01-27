@@ -9,8 +9,13 @@ const sidebar = (props) => {
     favElements = [];
 
     for (let fav in props.favs) {
-      if (props.favs.hasOwnProperty(fav)) {
-        favElements.push(<SidebarInfo key={fav} favData={props.favs[fav]} />);
+      if (props.favs.hasOwnProperty(fav) && fav !== 'favs') {
+        favElements.push(
+          <SidebarInfo
+            key={fav}
+            id={fav}
+            favData={props.favs[fav]} />
+        );
       }
     }
   }
