@@ -68,21 +68,21 @@ class Map extends Component {
     // Adds custom html and click event to infoWindow
     // Action: marker click
     georssLayer.addListener('click', (e) => {
-      const newData = {...e.featureData}, // Copy the feature data first
-            favBar = <div>
-                       <div className={classes.favBarText}>Add to favorites</div>
-                       <div className={classes.favBarPlus} onClick={() => this.addToFavs(e.featureData)}>+</div>
-                       <div className={classes.clearDiv}></div>
-                     </div>;
+      const featureData = {...e.featureData}, // Copy the feature data first
+            addToFavoritesHtml = <div>
+                                   <div className={classes.favBarText}>Add to favorites</div>
+                                   <div className={classes.favBarPlus} onClick={() => this.addToFavs(featureData)}>+</div>
+                                   <div className={classes.clearDiv}></div>
+                                 </div>;
 
       // Use ReactDOM to create a real DOM element
-      let renderedFavBar = ReactDOM.render(favBar, document.createElement('div'));
+      let renderedFavoritesHtml = ReactDOM.render(addToFavoritesHtml, document.createElement('div'));
 
-      // Insert the original infoWindow html after the add favorite row
-      renderedFavBar.insertAdjacentHTML('beforeend', newData.infoWindowHtml);
+      // Insert the original infoWindow html after the add favorite html
+      renderedFavoritesHtml.insertAdjacentHTML('beforeend', featureData.infoWindowHtml);
 
       // Set the infoWindow html
-      e.featureData.infoWindowHtml = renderedFavBar;
+      e.featureData.infoWindowHtml = renderedFavoritesHtml;
     });
   }
 
