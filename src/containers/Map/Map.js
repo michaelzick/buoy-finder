@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import loadGoogleMapsAPI from 'load-google-maps-api';
 import Sidebar from '../../components/Sidebar/Sidebar';
+import classes from './Map.css';
 
 class Map extends Component {
   state = {
@@ -44,9 +45,9 @@ class Map extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className={classes.mapWrap}>
         <Sidebar info={this.state.sidebarInfo}/>
-        <div id="map"></div>
+        <div className={classes.map} id="map"></div>
       </div>
     );
   }
