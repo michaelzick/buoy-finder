@@ -11,7 +11,11 @@ class Map extends Component {
   componentDidMount () {
     // Load the Google Map then initialize it
     loadGoogleMapsAPI().then((googleMaps) => {
-      this.initMap(googleMaps);
+      // Initialize map while setting var for transport
+      const geoLayer = this.initMap(googleMaps);
+
+      // Add events and dom stuff
+      this.addDomControls(geoLayer);
     }).catch((err) => {
       console.error(err);
     });
@@ -27,6 +31,11 @@ class Map extends Component {
       });
 
     georssLayer.setMap(map);
+
+    return georssLayer;
+  }
+
+  addDomControls = georssLayer => {
     georssLayer.addListener('click', (e) => {
       // Copy the feature data first
     	let newData = {...e.featureData},
