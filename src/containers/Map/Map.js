@@ -9,13 +9,16 @@ class Map extends Component {
   };
 
   componentDidMount () {
+
     // Load the Google Map then initialize it
     loadGoogleMapsAPI().then((googleMaps) => {
+
       // Initialize map while setting var for transport
       const geoLayer = this.initMap(googleMaps);
 
       // Add events and dom stuff
       this.addDomControls(geoLayer);
+
     }).catch((err) => {
       console.error(err);
     });
@@ -52,13 +55,11 @@ class Map extends Component {
           favBarText = document.createTextNode('Add to favorites');
 
       favBar.appendChild(favBarText);
-
       favBar.insertAdjacentHTML('beforeend', e.featureData.infoWindowHtml);
-
       favBar.addEventListener('click', () => {
-        this.setState({
-          sidebarInfo: newData
-        });
+          this.setState({
+            sidebarInfo: newData
+          });
 
         this.addToFavs(newData);
       });
@@ -74,10 +75,7 @@ class Map extends Component {
   render() {
     return (
       <div className={classes.mapWrap}>
-        <Sidebar
-          info={this.state.sidebarInfo}
-          closed={this.state.sidebarClosed}/>
-
+        <Sidebar info={this.state.sidebarInfo} />
         <div className={classes.map} id="map"></div>
       </div>
     );
