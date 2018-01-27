@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import loadGoogleMapsAPI from 'load-google-maps-api';
+import ReactDOM from 'react-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import classes from './Map.css';
 
@@ -37,14 +38,18 @@ class Map extends Component {
     return georssLayer;
   }
 
-  addToFavs = (newData) => {
-    const favsJson = {};
+  addToFavs = (data) => {
+    const favsJson = {},
+          featureData = {...data};
 
-    // Add the newData object to an id key for storage
-    favsJson[newData.id] = newData;
+    // Delete this so we don't get a circular DOM reference
+    delete featureData.infoWindowHtml;
+
+    // Add the object to an id key for storage
+    favsJson[featureData.id] = featureData;
 
     // Set the item in storage (has to be string)
-    localStorage.setItem(newData.id, JSON.stringify(favsJson));
+    localStorage.setItem(featureData.id, JSON.stringify(favsJson));
 
     this.setState({
       favs: localStorage
@@ -60,54 +65,23 @@ class Map extends Component {
   }
 
   addDomControls = georssLayer => {
-    /**************** Note ****************
-       Tried to get this rendering as JSX
-       But in order to get html set inside
-       the info window, it lost the click
-       handler on the '+' button.
-       I know, it's messy.
-    **************************************/
-
     // Adds custom html and click event to infoWindow
     // Action: marker click
     georssLayer.addListener('click', (e) => {
       const newData = {...e.featureData}, // Copy the feature data first
-          infoWinDiv = document.createElement('div'),
-          clearDiv = document.createElement('div'),
-          favBarDiv = document.createElement('div'),
-          favBarPlusDiv = document.createElement('div'),
-          favBarTextDiv = document.createElement('div'),
-          favBarText = document.createTextNode('Add to favorites'),
-          favBarPlus = document.createTextNode('+');
+            favBar = <div>
+                       <div>Add to favs</div>
+                       <button onClick={() => this.addToFavs(e.featureData)}>+</button>
+                     </div>;
 
-      // Div to clear floats (utility);
-      clearDiv.classList.add(classes.clearDiv);
+      // Use ReactDOM to create a real DOM element
+      let renderedFavBar = ReactDOM.render(favBar, document.createElement('div'));
 
-      favBarTextDiv.appendChild(favBarText); // Add the text to the span element
-      favBarPlusDiv.appendChild(favBarPlus); // Add the '+' to the div element
-
-      // Adds classes to the elements
-      favBarTextDiv.classList.add(classes.favBarText);
-      favBarPlusDiv.classList.add(classes.favBarPlus);
-
-      // Clicking '+' updates state and adds to favs
-      favBarPlusDiv.addEventListener('click', () => {
-        this.addToFavs(newData);
-      });
-
-      favBarDiv.appendChild(favBarTextDiv); // Add the text to the parent div
-      favBarDiv.appendChild(favBarPlusDiv); // Add the '+' to the parent div
-      favBarDiv.appendChild(clearDiv); // Add the clearDiv to the parent div
-
-      infoWinDiv.appendChild(favBarDiv);
-
-      infoWinDiv.insertAdjacentHTML('beforeend', e.featureData.infoWindowHtml);
-
-      // Add custom html to the infoWindow
-      newData.infoWindowHtml = infoWinDiv;
+      // Insert the original infoWindow html after the add favorite row
+      renderedFavBar.insertAdjacentHTML('beforeend', newData.infoWindowHtml);
 
       // Set the infoWindow html
-      e.featureData.infoWindowHtml = newData.infoWindowHtml;
+      e.featureData.infoWindowHtml = renderedFavBar;
     });
   }
 
