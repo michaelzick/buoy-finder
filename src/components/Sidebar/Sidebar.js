@@ -22,6 +22,7 @@ const sidebar = (props) => {
 
   return (
     <div className={classes.sidebar}>
+      <button onClick={props.clearFavs}>Clear All Favorites</button>
       {favElements}
     </div>
   );

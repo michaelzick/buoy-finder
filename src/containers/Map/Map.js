@@ -54,6 +54,14 @@ class Map extends Component {
     console.log(this.state.favs);
   }
 
+  clearAllFavs = () => {
+    localStorage.clear();
+
+    this.setState({
+      favs: localStorage
+    });
+  }
+
   // Adds custom html and click event to infoWindow
   // Action: marker click
   addDomControls = georssLayer => {
@@ -101,7 +109,7 @@ class Map extends Component {
   render() {
     return (
       <div className={classes.mapWrap}>
-        <Sidebar favs={this.state.favs} />
+        <Sidebar favs={this.state.favs} clearFavs={this.clearAllFavs} />
         <div className={classes.map} id="map"></div>
       </div>
     );
