@@ -1,7 +1,17 @@
 .sidebar {
-    width: 500px;
-    height: 100%;
-    float: left;
-    overflow-y: scroll;
-    padding: 0 10px;
+  width: 500px;
+  height: 100%;
+  float: left;
+  overflow-y: scroll;
+  padding: 0 10px;
+}
+
+.clearBtn {
+  border: none;
+  background: #000;
+  color: #FFF;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
 }

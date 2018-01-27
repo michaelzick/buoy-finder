@@ -8,7 +8,11 @@ const sidebar = (props) => {
 
   if (props.favs.length) {
     favElements = [];
-    clearBtn = <button onClick={props.clearFavs}>Clear All Favorites</button>;
+    clearBtn = <button
+                 onClick={props.clearFavs}
+                 className={classes.clearBtn}>
+                 Clear All Favorites
+               </button>;
 
     for (let fav in props.favs) {
       if (props.favs.hasOwnProperty(fav) && fav !== 'favs') {
