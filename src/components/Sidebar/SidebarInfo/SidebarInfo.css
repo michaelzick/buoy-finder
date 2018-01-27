@@ -1,0 +1,10 @@
+.sidebarItem {
+  border-bottom: 1px solid #ECECEC;
+  padding: 10px;
+}
+
+.sidebarName {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}

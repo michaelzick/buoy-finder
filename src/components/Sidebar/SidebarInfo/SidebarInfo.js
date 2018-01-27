@@ -1,15 +1,14 @@
 import React from 'react';
+import classes from './SidebarInfo.css';
 
 const sidebarInfo = (props) => {
     const favDataRaw = JSON.parse(props.favData),
-          favData = favDataRaw[props.id],
-          name = props.favData.name,
-          description = favData.description;
+          favData = favDataRaw[props.id];
 
     return (
-      <div>
-        <div>{name}</div>
-        <div>{description}</div>
+      <div className={classes.sidebarItem}>
+        <div className={classes.sidebarName}>{favData.name}</div>
+        <div dangerouslySetInnerHTML={{__html: favData.description}}></div>
       </div>
     );
 };
