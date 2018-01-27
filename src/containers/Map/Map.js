@@ -59,24 +59,25 @@ class Map extends Component {
     this.setState({
       favs: localStorage
     });
-
-    console.log(!this.state.favs.length);
   }
 
   // Adds custom html and click event to infoWindow
   // Action: marker click
   addDomControls = georssLayer => {
+    const thisComponent = this;
+
     georssLayer.addListener('click', (e) => {
       // Pass in a copy of the data, not the reference
       const newData = {...e.featureData},
             infoWindowHtml = <InfoWindow
                                element={e}
                                data={newData}
-                               addFav={this.addToFavs}
-                             />;
+                               addFav={() => thisComponent.addToFavs}
+                             />,
+            domString = ReactDOMServer.renderToString(infoWindowHtml);
 
       // Set the infoWindow html
-      e.featureData.infoWindowHtml = ReactDOMServer.renderToString(infoWindowHtml);
+      e.featureData.infoWindowHtml = domString;
     });
   }
 
