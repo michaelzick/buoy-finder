@@ -1,8 +1,8 @@
-.map {
-  height: 100%;
-}
-
 .mapWrap {
     height: 100%;
     position: relative;
+}
+
+.map {
+  height: 100%;
 }

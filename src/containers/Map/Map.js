@@ -41,13 +41,17 @@ class Map extends Component {
   addToFavs = (newData) => {
     const favsJson = {};
 
+    // Add the newData object to an id key for storage
     favsJson[newData.id] = newData;
 
+    // Set the item in storage (has to be string)
     localStorage.setItem(newData.id, JSON.stringify(favsJson));
 
     console.log(localStorage);
   }
 
+  // Adds custom html and click event to infoWindow
+  // Action: marker click
   addDomControls = georssLayer => {
     georssLayer.addListener('click', (e) => {
       const newData = {...e.featureData}, // Copy the feature data first
@@ -61,13 +65,15 @@ class Map extends Component {
       favBarTextDiv.appendChild(favBarText); // Add the text to the span element
       favBarPlusDiv.appendChild(favBarPlus); // Add the + to the div element
 
+      // Adds classes to the elements
       favBarTextDiv.classList.add('fav-bar-text');
       favBarPlusDiv.classList.add('fav-bar-plus');
 
+      // Clicking "+" updates state and adds to favs
       favBarPlusDiv.addEventListener('click', () => {
-          this.setState({
-            sidebarInfo: newData
-          });
+        this.setState({
+          sidebarInfo: newData // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Is this needed?
+        });
 
         this.addToFavs(newData);
       });
