@@ -57,13 +57,19 @@ class Map extends Component {
     this.setState({
       favs: localStorage
     });
-
-    console.log(!this.state.favs.length);
   }
 
-  // Adds custom html and click event to infoWindow
-  // Action: marker click
   addDomControls = georssLayer => {
+    /**************** Note ****************
+       Tried to get this rendering as JSX
+       But in order to get html set inside
+       the info window, it lost the click
+       handler on the '+' button.
+       I know, it's messy.
+    **************************************/
+
+    // Adds custom html and click event to infoWindow
+    // Action: marker click
     georssLayer.addListener('click', (e) => {
       const newData = {...e.featureData}, // Copy the feature data first
           infoWinDiv = document.createElement('div'),
