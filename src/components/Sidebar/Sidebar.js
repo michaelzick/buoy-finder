@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Sidebar.css';
-import SidebarInfo from './SidebarInfo/SidebarInfo';
+import SidebarItem from './SidebarItem/SidebarItem';
 
 const sidebar = (props) => {
   let favElements = '',
@@ -14,10 +14,11 @@ const sidebar = (props) => {
                  Clear All Favorites
                </button>;
 
+    // Loop thru the favs and set a sidebar item
     for (let fav in props.favs) {
       if (props.favs.hasOwnProperty(fav) && fav !== 'favs') {
         favElements.push(
-          <SidebarInfo
+          <SidebarItem
             key={fav}
             id={fav}
             favData={props.favs[fav]} />

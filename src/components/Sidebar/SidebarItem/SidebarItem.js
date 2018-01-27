@@ -1,7 +1,7 @@
 import React from 'react';
-import classes from './SidebarInfo.css';
+import classes from './SidebarItem.css';
 
-const sidebarInfo = (props) => {
+const sidebarItem = (props) => {
     const favDataRaw = JSON.parse(props.favData),
           favData = favDataRaw[props.id];
 
@@ -13,4 +13,4 @@ const sidebarInfo = (props) => {
     );
 };
 
-export default sidebarInfo;
+export default sidebarItem;
