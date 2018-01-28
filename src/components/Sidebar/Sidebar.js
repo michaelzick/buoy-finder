@@ -29,7 +29,7 @@ const sidebar = props => {
   } else {
     favElements = <div>
                     <h2>You don't have any favorites.</h2>
-                    <h3>Click a map marker and add one.</h3>
+                    <h3>Click a map marker to add one.</h3>
                   </div>;
   }
 
