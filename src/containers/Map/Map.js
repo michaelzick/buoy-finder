@@ -76,21 +76,34 @@ class Map extends Component {
     // Adds custom html and click event to infoWindow
     // Action: marker click
     georssLayer.addListener('click', (e) => {
-      const featureData = {...e.featureData}, // Copy the feature data first
-            addToFavoritesHtml = <div>
-                                   <div className={classes.favBarText}>Add to favorites</div>
-                                   <div className={classes.favBarPlus} onClick={() => this.addToFavs(featureData)}>+</div>
-                                   <div className={classes.clearDiv}></div>
-                                 </div>;
+      const featureData = {...e.featureData}; // Copy the feature data first
+      let addToFavoritesHtml = '',
+          renderedFavoritesHtml;
 
-      // Use ReactDOM to create a real DOM element
-      let renderedFavoritesHtml = ReactDOM.render(addToFavoritesHtml, document.createElement('div'));
+      // Don't append add to favorites html
+      // if it's already a favorite
+      if (!this.state.favs[featureData.id]) {
+        addToFavoritesHtml = <div>
+                               <div className={classes.favBarText}>Add to favorites</div>
+                               <div className={classes.favBarPlus} onClick={() => this.addToFavs(featureData)}>+</div>
+                               <div className={classes.clearDiv}></div>
+                             </div>;
 
-      // Insert the original infoWindow html after the add favorite html
-      renderedFavoritesHtml.insertAdjacentHTML('beforeend', featureData.infoWindowHtml);
+        // Use ReactDOM to create a real DOM element
+        renderedFavoritesHtml = ReactDOM.render(addToFavoritesHtml, document.createElement('div'));
 
-      // Set the infoWindow html
-      e.featureData.infoWindowHtml = renderedFavoritesHtml;
+        // Insert the original infoWindow html after the add favorite html
+        renderedFavoritesHtml.insertAdjacentHTML('beforeend', featureData.infoWindowHtml);
+
+        // Set the infoWindow html
+        e.featureData.infoWindowHtml = renderedFavoritesHtml;
+      } else {
+        if (featureData.infoWindowHtml.childNodes && featureData.infoWindowHtml.childNodes.length > 1) {
+          e.featureData.infoWindowHtml = featureData.infoWindowHtml.childNodes[
+                                           featureData.infoWindowHtml.childNodes.length - 1
+                                         ];
+        }
+      }
     });
   }
 
