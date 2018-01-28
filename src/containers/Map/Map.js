@@ -38,7 +38,7 @@ class Map extends Component {
     return georssLayer;
   }
 
-  addToFavs = (data) => {
+  addToFavs = (element, data) => {
     const favsJson = {},
           featureData = {...data};
 
@@ -50,6 +50,9 @@ class Map extends Component {
 
     // Set the item in storage (has to be string)
     localStorage.setItem(featureData.id, JSON.stringify(favsJson));
+
+    // Change the '+' to Added!
+    element.target.innerHTML = 'Added!';
 
     this.setState({
       favs: localStorage
@@ -85,7 +88,7 @@ class Map extends Component {
       if (!this.state.favs[featureData.id]) {
         addToFavoritesHtml = <div>
                                <div className={classes.favBarText}>Add to favorites</div>
-                               <div className={classes.favBarPlus} onClick={() => this.addToFavs(featureData)}>+</div>
+                               <div className={classes.favBarPlus} onClick={(element) => this.addToFavs(element, featureData)}>+</div>
                                <div className={classes.clearDiv}></div>
                              </div>;
 
@@ -98,6 +101,8 @@ class Map extends Component {
         // Set the infoWindow html
         e.featureData.infoWindowHtml = renderedFavoritesHtml;
       } else {
+        // If childNodes exist, it means that the above html has been set/buoy is favorited
+        // Therefore, set the infoWindow html to the last node (the original html)
         if (featureData.infoWindowHtml.childNodes && featureData.infoWindowHtml.childNodes.length > 1) {
           e.featureData.infoWindowHtml = featureData.infoWindowHtml.childNodes[
                                            featureData.infoWindowHtml.childNodes.length - 1
