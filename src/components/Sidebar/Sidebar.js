@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Sidebar.css';
 import SidebarItem from './SidebarItem/SidebarItem';
 
-const sidebar = (props) => {
+const sidebar = props => {
   let favElements = '',
       clearBtn = '';
 
