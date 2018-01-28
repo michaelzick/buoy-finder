@@ -8,14 +8,13 @@
 
 - If you don't, I recommend the [NVM way](https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/).
 
-- Next, head over to the [GitHub repo](https://github.com/zickonezero/buoy-finder),
-click the Clone or download menu, choose SSH or HTTPS and copy the link.
+- Next, click the green Clone or download menu, choose SSH or HTTPS and copy the link.
 
 - Then clone the repo locally and enter the new directory:
 
 `$ git clone [repo link you just copied]`
 
-`$ cd sl`
+`$ cd buoy-finder`
 
 - Now install the dependencies:
 
