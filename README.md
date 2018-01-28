@@ -1,4 +1,4 @@
-# Welcome to the Buoy Finding & Favoriting (BFF) app! Your BFF when it comes to finding waves.
+# Welcome to the Buoy Finding & Favoriting (BFF) app! <br>Your BFF when it comes to finding waves.
 
 ## Installation is easy
 
