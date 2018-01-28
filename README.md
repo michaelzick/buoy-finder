@@ -8,9 +8,16 @@
 
 - If you don't, I recommend the [NVM way](https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/).
 
-- Next, head over to the [GitHub repo](https://github.com/zickonezero/sl), click the Clone or download menu and choose SSH or HTTPS.
+- Next, head over to the [GitHub repo](https://github.com/zickonezero/sl),
+click the Clone or download menu, choose SSH or HTTPS and copy the link.
 
-- Once it's cloned locally, install the dependencies:
+- Then clone the repo locally and enter the new directory:
+
+`$ git clone [repo link you just copied]`
+
+`$ cd sl`
+
+- Now install the dependencies:
 
 `$ npm install --progress`
 
