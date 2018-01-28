@@ -84,14 +84,17 @@ class Map extends Component {
       const featureData = {...e.featureData}; // Copy the feature data first
       let addToFavoritesHtml = '',
           renderedFavoritesHtml,
-          ogHtml = featureData.infoWindowHtml;
+          originalHtml = featureData.infoWindowHtml;
 
       // Don't append add to favorites html
       // if it's already a favorite
       if (!this.state.favs[featureData.id]) {
         addToFavoritesHtml = <div>
                                <div className={classes.favBarText}>Add to favorites</div>
-                               <div className={classes.favBarPlus} onClick={(element) => this.addToFavs(element, featureData)}>+</div>
+                               <div className={classes.favBarPlus}
+                                 onClick={(element) => this.addToFavs(element, featureData)}>
+                                 +
+                               </div>
                                <div className={classes.clearDiv}></div>
                              </div>;
 
@@ -99,18 +102,21 @@ class Map extends Component {
         renderedFavoritesHtml = ReactDOM.render(addToFavoritesHtml, document.createElement('div'));
 
         if (typeof featureData.infoWindowHtml === 'object') {
-          ogHtml = featureData.infoWindowHtml.innerHTML.split('Added!')[1];
+          // If infoWindowHtml is an object, grab the innerHTML
+          // and parse out the Added! html
+          originalHtml = featureData.infoWindowHtml.innerHTML.split('Added!')[1] ||
+            featureData.infoWindowHtml.innerHTML.split('+</div>')[1];
         }
 
         // Insert the original infoWindow html after the add favorite html
-        renderedFavoritesHtml.insertAdjacentHTML('beforeend', ogHtml);
+        renderedFavoritesHtml.insertAdjacentHTML('beforeend', originalHtml);
 
         // Set the infoWindow html
         e.featureData.infoWindowHtml = renderedFavoritesHtml;
       } else {
         // If childNodes exist, it means that the above html has been set/buoy is favorited
         // Therefore, set the infoWindow html to the last node (the original html)
-        if (featureData.infoWindowHtml.childNodes && featureData.infoWindowHtml.childNodes.length > 1) {
+        if (featureData.infoWindowHtml.lastChild) {
           e.featureData.infoWindowHtml = featureData.infoWindowHtml.lastChild.innerHTML;
         }
       }
