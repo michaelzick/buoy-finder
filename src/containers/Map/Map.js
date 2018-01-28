@@ -40,6 +40,22 @@ class Map extends Component {
     return georssLayer;
   }
 
+  clearAllFavs = () => {
+    localStorage.clear();
+
+    this.setState({
+      favs: localStorage
+    });
+  }
+
+  deleteFav = (favId) => {
+    localStorage.removeItem(favId);
+
+    this.setState({
+      favs: localStorage
+    });
+  }
+
   addToFavs = (element, data) => {
     const favsJson = {},
           featureData = {...data};
@@ -61,29 +77,14 @@ class Map extends Component {
     });
   }
 
-  clearAllFavs = () => {
-    localStorage.clear();
-
-    this.setState({
-      favs: localStorage
-    });
-  }
-
-  deleteFav = (favId) => {
-    localStorage.removeItem(favId);
-
-    this.setState({
-      favs: localStorage
-    });
-  }
-
   addDomControls = georssLayer => {
     // Adds custom html and click event to infoWindow
     // Action: marker click
     georssLayer.addListener('click', (e) => {
       const featureData = {...e.featureData}; // Copy the feature data first
       let addToFavoritesHtml = '',
-          renderedFavoritesHtml;
+          renderedFavoritesHtml,
+          ogHtml = featureData.infoWindowHtml;
 
       // Don't append add to favorites html
       // if it's already a favorite
@@ -97,8 +98,12 @@ class Map extends Component {
         // Use ReactDOM to create a real DOM element
         renderedFavoritesHtml = ReactDOM.render(addToFavoritesHtml, document.createElement('div'));
 
+        if (typeof featureData.infoWindowHtml === 'object') {
+          ogHtml = featureData.infoWindowHtml.innerHTML.split('Added!')[1];
+        }
+
         // Insert the original infoWindow html after the add favorite html
-        renderedFavoritesHtml.insertAdjacentHTML('beforeend', featureData.infoWindowHtml);
+        renderedFavoritesHtml.insertAdjacentHTML('beforeend', ogHtml);
 
         // Set the infoWindow html
         e.featureData.infoWindowHtml = renderedFavoritesHtml;
@@ -106,9 +111,7 @@ class Map extends Component {
         // If childNodes exist, it means that the above html has been set/buoy is favorited
         // Therefore, set the infoWindow html to the last node (the original html)
         if (featureData.infoWindowHtml.childNodes && featureData.infoWindowHtml.childNodes.length > 1) {
-          e.featureData.infoWindowHtml = featureData.infoWindowHtml.childNodes[
-                                           featureData.infoWindowHtml.childNodes.length - 1
-                                         ];
+          e.featureData.infoWindowHtml = featureData.infoWindowHtml.lastChild.innerHTML;
         }
       }
     });
