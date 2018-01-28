@@ -1,3 +1,5 @@
+/* global localStorage */
+
 import React, { Component } from 'react';
 import loadGoogleMapsAPI from 'load-google-maps-api';
 import ReactDOM from 'react-dom';
