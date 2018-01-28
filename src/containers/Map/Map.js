@@ -13,7 +13,7 @@ class Map extends Component {
 
   componentDidMount () {
     // Load the Google Map then initialize it
-    loadGoogleMapsAPI().then((googleMaps) => {
+    loadGoogleMapsAPI().then(googleMaps => {
 
       // Initialize map while setting var for transport
       const geoLayer = this.initMap(googleMaps);
@@ -21,12 +21,12 @@ class Map extends Component {
       // Add events and dom stuff
       this.addDomControls(geoLayer);
 
-    }).catch((err) => {
+    }).catch(err => {
       console.error(err);
     });
   }
 
-  initMap = (googleMaps) => {
+  initMap = googleMaps => {
     const map = new googleMaps.Map(document.getElementById('map'), {
             zoom: 4,
             center: {lat: 49.496675, lng: -102.65625}
@@ -35,8 +35,10 @@ class Map extends Component {
             url: 'http://www.ndbc.noaa.gov/rss/ndbc_obs_search.php?lat=40N&lon=73W&radius=100'
           });
 
+    // Set rss layer to the map
     georssLayer.setMap(map);
 
+    // Return for transport
     return georssLayer;
   }
 
@@ -48,7 +50,7 @@ class Map extends Component {
     });
   }
 
-  deleteFav = (favId) => {
+  deleteFav = favId => {
     localStorage.removeItem(favId);
 
     this.setState({
@@ -80,8 +82,10 @@ class Map extends Component {
   addDomControls = georssLayer => {
     // Adds custom html and click event to infoWindow
     // Action: marker click
-    georssLayer.addListener('click', (e) => {
-      const featureData = {...e.featureData}; // Copy the feature data first
+    georssLayer.addListener('click', e => {
+      // Copy the feature data first
+      const featureData = {...e.featureData};
+
       let addToFavoritesHtml = '',
           renderedFavoritesHtml,
           originalHtml = featureData.infoWindowHtml;
@@ -92,18 +96,20 @@ class Map extends Component {
         addToFavoritesHtml = <div>
                                <div className={classes.favBarText}>Add to favorites</div>
                                <div className={classes.favBarPlus}
-                                 onClick={(element) => this.addToFavs(element, featureData)}>
+                                 onClick={element => this.addToFavs(element, featureData)}>
                                  +
                                </div>
                                <div className={classes.clearDiv}></div>
                              </div>;
 
         // Use ReactDOM to create a real DOM element
-        renderedFavoritesHtml = ReactDOM.render(addToFavoritesHtml, document.createElement('div'));
+        renderedFavoritesHtml = ReactDOM.render(
+          addToFavoritesHtml, document.createElement('div')
+        );
 
         if (typeof featureData.infoWindowHtml === 'object') {
           // If infoWindowHtml is an object, grab the innerHTML
-          // and parse out the Added! html
+          // and parse out the custom html that's added below
           originalHtml = featureData.infoWindowHtml.innerHTML.split('Added!')[1] ||
             featureData.infoWindowHtml.innerHTML.split('+</div>')[1];
         }
