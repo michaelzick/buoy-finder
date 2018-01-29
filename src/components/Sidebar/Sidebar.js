@@ -11,7 +11,7 @@ const sidebar = props => {
     clearBtn = <button
                  onClick={props.clearFavs}
                  className={classes.clearBtn}>
-                 Clear All Favorites
+                 Remove All Favorites
                </button>;
 
     // Loop thru the favs and set a sidebar item
