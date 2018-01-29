@@ -27,12 +27,13 @@ class Map extends Component {
   }
 
   initMap = googleMaps => {
-    const map = new googleMaps.Map(document.getElementById('map'), {
+    const ndbcUrl = 'http://www.ndbc.noaa.gov/rss/ndbc_obs_search.php?lat=40N&lon=73W&radius=100' +
+                      "?" + new Date().getTime(),
+          map = new googleMaps.Map(document.getElementById('map'), {
             zoom: 4,
-            center: {lat: 49.496675, lng: -102.65625}
           }),
           georssLayer = new googleMaps.KmlLayer({
-            url: 'http://www.ndbc.noaa.gov/rss/ndbc_obs_search.php?lat=40N&lon=73W&radius=100'
+            url: ndbcUrl
           });
 
     // Set rss layer to the map
