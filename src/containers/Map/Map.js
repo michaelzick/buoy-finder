@@ -27,6 +27,7 @@ class Map extends Component {
   }
 
   initMap = googleMaps => {
+    // Bust the cache or Google won't refresh the feed
     const ndbcUrl = 'http://www.ndbc.noaa.gov/rss/ndbc_obs_search.php?lat=40N&lon=73W&radius=100' +
                       "?" + new Date().getTime(),
           map = new googleMaps.Map(document.getElementById('map'), {
