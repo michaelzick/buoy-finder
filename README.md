@@ -8,7 +8,7 @@
 
 - If you don't, I recommend the [NVM way](https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/).
 
-- Next, click the green Clone or download menu, choose SSH or HTTPS and copy the link.
+- Next, click the green "Clone or download" menu, choose SSH or HTTPS and copy the link.
 
 - Then clone the repo locally and enter the new directory:
 
