@@ -6,9 +6,9 @@ import ReactDOM from 'react-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import classes from './Map.css';
 
-class Map extends Component {
+export class Map extends Component {
   state = {
-    favs: localStorage,
+    favs: this.props.localstorage
   };
 
   componentDidMount () {
@@ -16,32 +16,34 @@ class Map extends Component {
     loadGoogleMapsAPI().then(googleMaps => {
 
       // Initialize map while setting var for transport
-      const geoLayer = this.initMap(googleMaps);
-
-      // Add events and dom stuff
-      this.addDomControls(geoLayer);
-
+      this.initMap(googleMaps);
     }).catch(err => {
       console.error(err);
     });
   }
 
   initMap = googleMaps => {
-    // Bust the cache or Google won't refresh the feed
-    const ndbcUrl = 'http://www.ndbc.noaa.gov/rss/ndbc_obs_search.php?lat=40N&lon=73W&radius=100' +
-                      "?" + new Date().getTime(),
+    const geoRssLayer = this.getGeoRssLayer(googleMaps),
           map = new googleMaps.Map(document.getElementById('map'), {
             zoom: 4,
-          }),
-          georssLayer = new googleMaps.KmlLayer({
-            url: ndbcUrl
           });
 
     // Set rss layer to the map
-    georssLayer.setMap(map);
+    geoRssLayer.setMap(map);
 
-    // Return for transport
-    return georssLayer;
+    // Add events and dom stuff
+    this.addDomControls(geoRssLayer);
+  }
+
+  getGeoRssLayer = googleMaps => {
+    // Bust the cache or Google won't refresh the feed
+    const ndbcUrl = 'http://www.ndbc.noaa.gov/rss/ndbc_obs_search.php?lat=40N&lon=73W&radius=100' +
+                      "?" + new Date().getTime(),
+          geoRssLayer = new googleMaps.KmlLayer({
+            url: ndbcUrl
+          });
+
+    return geoRssLayer;
   }
 
   clearAllFavs = () => {
