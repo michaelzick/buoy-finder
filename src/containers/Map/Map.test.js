@@ -51,8 +51,8 @@ describe ('Map.addToFavs', () => {
     instance.addToFavs(element, data);
 
     // Checks that state.favs is equal to window.localStorage
-    expect (instance.state.favs.getItem(data.id))
-        .toEqual(window.localStorage.getItem(data.id));
+    expect (instance.state.favs.getStore())
+        .toEqual(window.localStorage.getStore());
 
     // Checks that '+' is changed to 'Added!'
     expect (element.target.innerHTML).toBe('Added!');
@@ -96,6 +96,10 @@ describe ('Map.deleteFav', () => {
 
     // Get the number of keys in the localStorage store object
     storeKeysLength = Object.keys(window.localStorage.getStore()).length;
+
+    // Checks that state.favs is equal to window.localStorage
+    expect (instance.state.favs.getStore())
+        .toEqual(window.localStorage.getStore());
 
     // Checks that state.favs is equal to window.localStorage
     expect(storeKeysLength).toEqual(1);
