@@ -1,6 +1,8 @@
 import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+
+import loadGoogleMapsAPI from 'load-google-maps-api';
 import { Map } from './Map';
 
 configure({adapter: new Adapter()});
@@ -29,6 +31,20 @@ const localStorageMock = (() => {
 
 // Define localStorage on window
 Object.defineProperty(window, 'localStorage', {value: localStorageMock});
+
+describe ('Map.getGeoRssLayer', () => {
+  it('should return a GeoRSS object', () => {
+    const wrapper = shallow(<Map localstorage={window.localStorage} />),
+          instance = wrapper.instance();
+
+    return loadGoogleMapsAPI().then(googleMaps => {
+      const geoRssObject = instance.getGeoRssLayer(googleMaps);
+
+      // Checks if returned object has the expected keys
+      expect(Object.keys(geoRssObject)).toEqual(['gm_accessors_', 'url', 'gm_bindings_']);
+    });
+  });
+});
 
 describe ('Map.addToFavs', () => {
   it('should add fav to localStorage and state', () => {
