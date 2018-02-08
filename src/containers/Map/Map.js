@@ -15,7 +15,7 @@ export class Map extends Component {
     // Load the Google Map then initialize it
     loadGoogleMapsAPI().then(googleMaps => {
 
-      // Initialize map while setting var for transport
+      // Initialize map
       this.initMap(googleMaps);
     }).catch(err => {
       console.error(err);
