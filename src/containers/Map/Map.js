@@ -8,6 +8,7 @@ import classes from './Map.css';
 
 export class Map extends Component {
   state = {
+    // Seeded props for testing; will not change in root component
     favs: this.props.localstorage
   };
 
